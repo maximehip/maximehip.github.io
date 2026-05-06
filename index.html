@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Popcorn Club — Regardez des films ensemble</title>
-  <meta name="description" content="Popcorn Club : l'app pour organiser vos soirées cinéma, suivre vos films et partager vos avis avec vos amis." />
+  <title>Popcorn Club — Un film, chaque jour à 19h</title>
+  <meta name="description" content="Chaque jour à 19h, un film est révélé. Regardez-le et débattez-en avec toute la communauté. Rejoignez le Popcorn Club." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -12,9 +12,10 @@
       --red: #E8383D;
       --red-dark: #C42C31;
       --yellow: #F5C518;
-      --dark: #141414;
-      --dark-2: #1c1c1c;
-      --dark-3: #242424;
+      --dark: #0e0e0e;
+      --dark-2: #1a1a1a;
+      --dark-3: #222;
+      --dark-4: #2a2a2a;
       --text: #f0f0f0;
       --muted: #888;
       --radius: 14px;
@@ -38,8 +39,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 18px 48px;
-      background: rgba(20,20,20,0.85);
-      backdrop-filter: blur(12px);
+      background: rgba(14,14,14,0.9);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
@@ -47,14 +48,12 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-size: 1.2rem;
+      font-weight: 800;
       letter-spacing: -0.3px;
       color: var(--text);
       text-decoration: none;
     }
-
-    .logo-icon { font-size: 1.5rem; }
 
     .nav-cta {
       background: var(--red);
@@ -62,8 +61,8 @@
       border: none;
       padding: 10px 22px;
       border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 0.88rem;
+      font-weight: 700;
       cursor: pointer;
       text-decoration: none;
       transition: background 0.2s;
@@ -86,50 +85,78 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: -200px; left: 50%;
+      top: 0; left: 50%;
       transform: translateX(-50%);
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(232,56,61,0.18) 0%, transparent 70%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at top, rgba(232,56,61,0.15) 0%, transparent 65%);
       pointer-events: none;
     }
 
-    .hero-badge {
+    /* COUNTDOWN CLOCK */
+    .clock-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(245,197,24,0.12);
-      border: 1px solid rgba(245,197,24,0.3);
-      color: var(--yellow);
-      padding: 6px 16px;
+      gap: 10px;
+      background: rgba(232,56,61,0.1);
+      border: 1px solid rgba(232,56,61,0.3);
+      padding: 10px 20px;
       border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
+      margin-bottom: 36px;
+    }
+
+    .clock-dot {
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .clock-text {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--red);
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      margin-bottom: 32px;
+    }
+
+    .clock-time {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
     }
 
     .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      font-weight: 800;
+      font-size: clamp(2.6rem, 7vw, 5.2rem);
+      font-weight: 900;
       line-height: 1.05;
-      letter-spacing: -2px;
+      letter-spacing: -2.5px;
       max-width: 820px;
       margin-bottom: 24px;
     }
 
-    .hero h1 span { color: var(--red); }
+    .hero h1 .accent { color: var(--red); }
+    .hero h1 .time {
+      color: var(--yellow);
+      font-variant-numeric: tabular-nums;
+    }
 
     .hero p {
-      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-size: clamp(1rem, 2vw, 1.2rem);
       color: var(--muted);
-      max-width: 520px;
+      max-width: 480px;
       margin-bottom: 48px;
+      line-height: 1.75;
     }
 
     .hero-actions {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -144,196 +171,290 @@
       text-decoration: none;
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
 
-    .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      padding: 16px 36px;
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      padding: 16px 28px;
       border-radius: 10px;
       font-size: 1rem;
       font-weight: 600;
       text-decoration: none;
       border: 1px solid rgba(255,255,255,0.1);
-      transition: background 0.2s;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
 
-    /* MOCKUP STRIP */
-    .mockup-strip {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
+    /* FILM DU JOUR CARD */
+    .film-preview {
       margin-top: 72px;
-      padding: 0 24px;
+      position: relative;
+      display: inline-block;
     }
 
-    .mockup-card {
+    .film-card {
       background: var(--dark-2);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius);
-      padding: 20px;
+      border-radius: 20px;
+      padding: 28px;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-width: 140px;
-      flex: 1;
-      max-width: 160px;
+      gap: 24px;
+      align-items: flex-start;
+      max-width: 480px;
+      text-align: left;
     }
 
-    .mockup-poster {
-      width: 100%;
+    .film-poster {
+      width: 90px;
+      min-width: 90px;
       aspect-ratio: 2/3;
-      border-radius: 8px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1a0a00, #5c2d00);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 2.5rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .mockup-poster.p1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
-    .mockup-poster.p2 { background: linear-gradient(135deg, #2d1b69, #11998e); }
-    .mockup-poster.p3 { background: linear-gradient(135deg, #521c52, #8b0000); }
-    .mockup-poster.p4 { background: linear-gradient(135deg, #0f2027, #203a43); }
-    .mockup-poster.p5 { background: linear-gradient(135deg, #373b44, #4286f4); }
+    .film-poster::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4));
+    }
 
-    .mockup-stars { color: var(--yellow); font-size: 0.75rem; }
-    .mockup-title { font-size: 0.7rem; font-weight: 600; color: var(--text); }
+    .film-info { flex: 1; }
 
-    /* FEATURES */
+    .film-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .film-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+    .film-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; }
+
+    .film-comments {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .comment {
+      background: var(--dark-3);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      color: var(--text);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .comment-avatar {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--dark-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      min-width: 22px;
+    }
+
+    .comment-text { color: var(--muted); line-height: 1.4; }
+    .comment-text strong { color: var(--text); }
+
+    .film-locked {
+      position: absolute;
+      inset: 0;
+      background: rgba(14,14,14,0.7);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      backdrop-filter: blur(2px);
+    }
+
+    .lock-icon { font-size: 2rem; }
+    .lock-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-align: center;
+      max-width: 180px;
+      line-height: 1.4;
+    }
+
+    /* SECTIONS */
     section { padding: 96px 24px; }
 
     .section-label {
       text-align: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 2px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--red);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .section-title {
       text-align: center;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -1.2px;
+      margin-bottom: 14px;
     }
 
     .section-sub {
       text-align: center;
       color: var(--muted);
-      max-width: 500px;
+      max-width: 480px;
       margin: 0 auto 64px;
-      font-size: 1rem;
+      font-size: 0.98rem;
+      line-height: 1.75;
     }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .feature-card {
-      background: var(--dark-2);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: var(--radius);
-      padding: 36px 28px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .feature-card:hover { border-color: rgba(232,56,61,0.4); transform: translateY(-4px); }
-
-    .feature-icon {
-      width: 52px; height: 52px;
-      background: rgba(232,56,61,0.12);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-
-    .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-    .feature-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
 
     /* HOW IT WORKS */
     .how-bg { background: var(--dark-2); }
 
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 32px;
-      max-width: 900px;
+    .timeline {
+      max-width: 680px;
       margin: 0 auto;
-      counter-reset: step;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
-    .step {
-      text-align: center;
-      counter-increment: step;
+    .timeline-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding-bottom: 48px;
+      position: relative;
     }
 
-    .step-num {
-      width: 56px; height: 56px;
-      background: var(--red);
-      border-radius: 50%;
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 52px;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+    .timeline-item:last-child::before { display: none; }
+
+    .tl-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
-      font-weight: 800;
-      margin: 0 auto 20px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
     }
 
-    .step-num::before { content: counter(step); }
+    .tl-icon.red { background: rgba(232,56,61,0.15); border: 1px solid rgba(232,56,61,0.3); }
+    .tl-icon.yellow { background: rgba(245,197,24,0.12); border: 1px solid rgba(245,197,24,0.25); }
+    .tl-icon.blue { background: rgba(99,179,237,0.12); border: 1px solid rgba(99,179,237,0.25); }
+    .tl-icon.green { background: rgba(72,187,120,0.12); border: 1px solid rgba(72,187,120,0.25); }
 
-    .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .step p { color: var(--muted); font-size: 0.88rem; }
+    .tl-content { flex: 1; padding-top: 8px; }
+    .tl-time {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .tl-content h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+    .tl-content p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    /* DEBATE FEATURES */
+    .debate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .debate-card {
+      background: var(--dark-2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 32px 26px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .debate-card:hover { border-color: rgba(232,56,61,0.35); transform: translateY(-3px); }
+
+    .d-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .debate-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+    .debate-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
 
     /* CONTACT */
-    #contact { background: var(--dark-3); }
+    #contact { background: var(--dark-2); }
 
     .contact-wrapper {
-      max-width: 560px;
+      max-width: 540px;
       margin: 0 auto;
     }
 
     .contact-card {
-      background: var(--dark-2);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--radius);
-      padding: 48px 40px;
+      padding: 44px 40px;
     }
 
     .contact-card form {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
-    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
 
     .form-group label {
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
     }
 
     .form-group input,
     .form-group textarea,
     .form-group select {
-      background: var(--dark-3);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--dark-4);
+      border: 1px solid rgba(255,255,255,0.09);
       border-radius: 8px;
-      padding: 14px 16px;
+      padding: 13px 15px;
       color: var(--text);
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       font-family: inherit;
       transition: border-color 0.2s;
       outline: none;
@@ -342,31 +463,30 @@
 
     .form-group input:focus,
     .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--red);
-    }
+    .form-group select:focus { border-color: var(--red); }
 
-    .form-group select option { background: var(--dark-3); }
+    .form-group select option { background: var(--dark-4); }
 
     .submit-btn {
       background: var(--red);
       color: #fff;
       border: none;
-      padding: 16px;
+      padding: 15px;
       border-radius: 10px;
-      font-size: 1rem;
+      font-size: 0.97rem;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.2s, transform 0.15s;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     .submit-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
 
     .contact-alt {
       text-align: center;
-      margin-top: 28px;
+      margin-top: 24px;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.87rem;
+      line-height: 1.8;
     }
 
     .contact-alt a {
@@ -376,11 +496,23 @@
     }
     .contact-alt a:hover { text-decoration: underline; }
 
+    .success-msg {
+      display: none;
+      background: rgba(72,187,120,0.1);
+      border: 1px solid rgba(72,187,120,0.3);
+      color: #68d391;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
     /* FOOTER */
     footer {
       background: var(--dark);
       border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 40px 48px;
+      padding: 36px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -388,151 +520,155 @@
       gap: 16px;
     }
 
-    footer .logo { font-size: 1rem; }
-
     .footer-links { display: flex; gap: 24px; }
     .footer-links a {
       color: var(--muted);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--text); }
 
-    .footer-copy { color: var(--muted); font-size: 0.8rem; }
+    .footer-copy { color: var(--muted); font-size: 0.78rem; }
 
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
+    @media (max-width: 620px) {
       nav { padding: 16px 20px; }
-      .mockup-strip { display: none; }
-      .contact-card { padding: 32px 24px; }
-      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; }
-    }
-
-    /* SUCCESS STATE */
-    .success-msg {
-      display: none;
-      background: rgba(34,197,94,0.1);
-      border: 1px solid rgba(34,197,94,0.3);
-      color: #4ade80;
-      padding: 16px;
-      border-radius: 8px;
-      text-align: center;
-      font-weight: 600;
+      .film-card { flex-direction: column; }
+      .contact-card { padding: 30px 20px; }
+      footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; gap: 14px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
-    <a href="#" class="logo">
-      <span class="logo-icon">🍿</span>
-      Popcorn Club
-    </a>
-    <a href="#contact" class="nav-cta">Nous contacter</a>
+    <a href="#" class="logo">🍿 Popcorn Club</a>
+    <a href="#contact" class="nav-cta">Rejoindre la bêta</a>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-badge">🎬 Bientôt disponible</div>
-    <h1>Regardez des films<br /><span>ensemble, enfin.</span></h1>
-    <p>Organisez vos soirées cinéma, suivez vos films vus, et partagez vos avis avec vos amis — tout en un seul endroit.</p>
+    <div class="clock-pill">
+      <div class="clock-dot"></div>
+      <span class="clock-text">Prochain film dans</span>
+      <span class="clock-time" id="countdown">--:--:--</span>
+    </div>
+
+    <h1>Un film.<br /><span class="time">Chaque jour à 19h.</span><br /><span class="accent">Débattez-en.</span></h1>
+
+    <p>Popcorn Club révèle un film par jour à 19h. Regardez-le, puis rejoignez la discussion avec toute la communauté. Pas de scroll infini — juste un film, chaque soir.</p>
+
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Rejoindre la bêta</a>
-      <a href="#features" class="btn-secondary">Découvrir l'app</a>
+      <a href="#contact" class="btn-primary">🎬 Rejoindre la bêta</a>
+      <a href="#how" class="btn-ghost">Comment ça marche</a>
     </div>
 
-    <div class="mockup-strip">
-      <div class="mockup-card">
-        <div class="mockup-poster p1">🚀</div>
-        <div class="mockup-stars">★★★★★</div>
-        <div class="mockup-title">Dune Part Two</div>
+    <!-- Film du jour mockup -->
+    <div class="film-preview">
+      <div class="film-card">
+        <div class="film-poster">🎞️</div>
+        <div class="film-info">
+          <span class="film-badge">Film du jour</span>
+          <div class="film-title">2001 : L'Odyssée de l'espace</div>
+          <div class="film-meta">Stanley Kubrick · 1968 · 2h 29min</div>
+          <div class="film-comments">
+            <div class="comment">
+              <div class="comment-avatar">A</div>
+              <div class="comment-text"><strong>Alice</strong> — La scène finale reste incomprise 50 ans après.</div>
+            </div>
+            <div class="comment">
+              <div class="comment-avatar">R</div>
+              <div class="comment-text"><strong>Romain</strong> — HAL 9000 est le meilleur méchant du cinéma, point.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mockup-card">
-        <div class="mockup-poster p2">🐉</div>
-        <div class="mockup-stars">★★★★☆</div>
-        <div class="mockup-title">Avatar 2</div>
-      </div>
-      <div class="mockup-card">
-        <div class="mockup-poster p3">🩸</div>
-        <div class="mockup-stars">★★★★★</div>
-        <div class="mockup-title">Oppenheimer</div>
-      </div>
-      <div class="mockup-card">
-        <div class="mockup-poster p4">🤖</div>
-        <div class="mockup-stars">★★★☆☆</div>
-        <div class="mockup-title">The Creator</div>
-      </div>
-      <div class="mockup-card">
-        <div class="mockup-poster p5">🕷️</div>
-        <div class="mockup-stars">★★★★☆</div>
-        <div class="mockup-title">Spider-Man</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section id="features">
-    <p class="section-label">Fonctionnalités</p>
-    <h2 class="section-title">Tout ce dont vous avez besoin</h2>
-    <p class="section-sub">Popcorn Club réunit tout ce qui rend une soirée ciné mémorable.</p>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🎥</div>
-        <h3>Watchlist partagée</h3>
-        <p>Créez des listes de films à voir avec vos amis. Votez pour le prochain film de la soirée directement dans l'app.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⭐</div>
-        <h3>Avis & notes</h3>
-        <p>Partagez votre note et votre avis après chaque film. Comparez vos goûts avec vos proches et découvrez qui a le meilleur palmarès.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📅</div>
-        <h3>Soirées organisées</h3>
-        <p>Planifiez une soirée cinéma en quelques secondes : choisissez un film, une heure, invitez vos amis. C'est tout.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <h3>Découvertes personnalisées</h3>
-        <p>Recevez des recommandations basées sur ce que vous et vos amis avez aimé. Plus vous regardez, mieux c'est.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🏆</div>
-        <h3>Stats & palmarès</h3>
-        <p>Suivez vos films vus, vos genres préférés, votre temps d'écran cinéma et comparez-vous avec vos amis.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💬</div>
-        <h3>Réactions en direct</h3>
-        <p>Réagissez pendant le film avec des emojis. Retrouvez toutes les réactions dans un fil dédié après la séance.</p>
+      <div class="film-locked">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-label">Révélé chaque soir à 19h</div>
       </div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="how-bg">
-    <p class="section-label">Comment ça marche</p>
-    <h2 class="section-title">En 3 étapes simples</h2>
-    <p class="section-sub">Pas de configuration compliquée. Vous êtes prêts en moins d'une minute.</p>
+  <section class="how-bg" id="how">
+    <p class="section-label">Le rituel quotidien</p>
+    <h2 class="section-title">Comment ça fonctionne</h2>
+    <p class="section-sub">Un format simple, pensé pour créer de vraies discussions autour du cinéma.</p>
 
-    <div class="steps">
-      <div class="step">
-        <div class="step-num"></div>
-        <h3>Créez votre club</h3>
-        <p>Invitez vos amis et rejoignez votre premier Popcorn Club en un tap.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="tl-icon red">🎬</div>
+        <div class="tl-content">
+          <div class="tl-time">Chaque jour à 19h00</div>
+          <h3>Le film du jour est révélé</h3>
+          <p>Un film est sélectionné chaque soir — classique, culte, récent, documentaire. Vous recevez une notification et la fiche complète s'ouvre.</p>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num"></div>
-        <h3>Choisissez un film</h3>
-        <p>Ajoutez des films à votre watchlist et votez ensemble pour le prochain à regarder.</p>
+      <div class="timeline-item">
+        <div class="tl-icon yellow">🍿</div>
+        <div class="tl-content">
+          <div class="tl-time">Le soir</div>
+          <h3>Vous regardez le film</h3>
+          <p>Seul, en couple, entre amis. Regardez sur la plateforme de votre choix — Popcorn Club ne fait pas de streaming, il fait du lien.</p>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num"></div>
-        <h3>Profitez & partagez</h3>
-        <p>Regardez, réagissez, notez. Votre historique ciné commun se construit automatiquement.</p>
+      <div class="timeline-item">
+        <div class="tl-icon blue">💬</div>
+        <div class="tl-content">
+          <div class="tl-time">Après le générique</div>
+          <h3>Le débat commence</h3>
+          <p>La salle de débat s'ouvre. Posez vos théories, défendez vos avis, répondez aux autres membres. Un vrai échange, pas des likes.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-icon green">📊</div>
+        <div class="tl-content">
+          <div class="tl-time">Le lendemain</div>
+          <h3>Le résumé du débat</h3>
+          <p>Les meilleurs arguments, les avis les plus tranchés, la note collective — tout est résumé avant que le prochain film soit révélé.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEBATE FEATURES -->
+  <section id="features">
+    <p class="section-label">Fonctionnalités</p>
+    <h2 class="section-title">Fait pour débattre</h2>
+    <p class="section-sub">Popcorn Club est conçu pour que les échanges soient profonds, pas superficiels.</p>
+
+    <div class="debate-grid">
+      <div class="debate-card">
+        <div class="d-icon">🏟️</div>
+        <h3>Salle de débat commune</h3>
+        <p>Tout le monde débat autour du même film au même moment. Une expérience collective et synchronisée.</p>
+      </div>
+      <div class="debate-card">
+        <div class="d-icon">🎯</div>
+        <h3>Questions curateur</h3>
+        <p>Chaque film arrive avec 3 questions pour lancer la discussion — sur la mise en scène, le sens, ou l'impact émotionnel.</p>
+      </div>
+      <div class="debate-card">
+        <div class="d-icon">🏆</div>
+        <h3>Arguments mis en avant</h3>
+        <p>Les débats les plus pertinents sont mis en valeur par la communauté. Pas de popularité, de qualité.</p>
+      </div>
+      <div class="debate-card">
+        <div class="d-icon">📅</div>
+        <h3>Archives des débats</h3>
+        <p>Retrouvez tous les films précédents et leurs discussions. Une cinémathèque vivante construite par la communauté.</p>
+      </div>
+      <div class="debate-card">
+        <div class="d-icon">🔔</div>
+        <h3>Notification à 19h</h3>
+        <p>Une alerte chaque soir pour ne jamais rater le film du jour. Le rituel devient une habitude.</p>
+      </div>
+      <div class="debate-card">
+        <div class="d-icon">⭐</div>
+        <h3>Note collective</h3>
+        <p>À la fin du débat, la communauté vote. Une note émergente, construite sur l'échange, pas sur l'algorithme.</p>
       </div>
     </div>
   </section>
@@ -540,8 +676,8 @@
   <!-- CONTACT -->
   <section id="contact">
     <p class="section-label">Contact</p>
-    <h2 class="section-title">Parlons-nous</h2>
-    <p class="section-sub">Une question, un partenariat, ou juste envie de rejoindre la bêta ? Écrivez-nous.</p>
+    <h2 class="section-title">On se retrouve ce soir ?</h2>
+    <p class="section-sub">Rejoignez la bêta, proposez un film, ou juste dites bonjour. On répond à tout.</p>
 
     <div class="contact-wrapper">
       <div class="contact-card">
@@ -551,8 +687,8 @@
           <input type="hidden" name="_next" value="https://maximehip.github.io/?sent=true" />
 
           <div class="form-group">
-            <label for="name">Nom</label>
-            <input type="text" id="name" name="name" placeholder="Votre nom" required />
+            <label for="name">Votre nom</label>
+            <input type="text" id="name" name="name" placeholder="Prénom Nom" required />
           </div>
 
           <div class="form-group">
@@ -561,25 +697,26 @@
           </div>
 
           <div class="form-group">
-            <label for="subject">Sujet</label>
+            <label for="subject">Je veux…</label>
             <select id="subject" name="subject">
-              <option value="beta">Rejoindre la bêta</option>
-              <option value="partenariat">Partenariat</option>
-              <option value="presse">Presse</option>
+              <option value="beta">Rejoindre la bêta en avant-première</option>
+              <option value="film">Proposer un film pour la sélection</option>
+              <option value="partenariat">Discuter d'un partenariat</option>
+              <option value="presse">Couverture presse / média</option>
               <option value="autre">Autre</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Dites-nous tout..." required></textarea>
+            <textarea id="message" name="message" rows="4" placeholder="Quel est votre film culte du moment ?"></textarea>
           </div>
 
-          <button type="submit" class="submit-btn">Envoyer le message</button>
+          <button type="submit" class="submit-btn">Envoyer →</button>
         </form>
 
         <div class="success-msg" id="success-msg">
-          ✅ Message envoyé ! On vous répond sous 48h.
+          🍿 Bienvenue au club ! On vous recontacte très vite.
         </div>
       </div>
 
@@ -592,10 +729,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <a href="#" class="logo">
-      <span class="logo-icon">🍿</span>
-      Popcorn Club
-    </a>
+    <a href="#" class="logo">🍿 Popcorn Club</a>
     <div class="footer-links">
       <a href="policy/Whomis.html">Politique de confidentialité</a>
       <a href="mailto:maxsimd0@gmail.com">Contact</a>
@@ -604,7 +738,22 @@
   </footer>
 
   <script>
-    // Show success message if redirected back after form submit
+    // Countdown to 19:00
+    function updateCountdown() {
+      const now = new Date();
+      const target = new Date();
+      target.setHours(19, 0, 0, 0);
+      if (now >= target) target.setDate(target.getDate() + 1);
+      const diff = target - now;
+      const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+      const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+      const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+      document.getElementById('countdown').textContent = `${h}:${m}:${s}`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Success state after form submit
     if (new URLSearchParams(window.location.search).get('sent') === 'true') {
       document.getElementById('contact-form').style.display = 'none';
       document.getElementById('success-msg').style.display = 'block';
